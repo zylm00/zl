@@ -66,7 +66,26 @@ lazy_static::lazy_static! {
     pub static ref OVERWRITE_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref DEFAULT_DISPLAY_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref OVERWRITE_DISPLAY_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
-    pub static ref DEFAULT_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
+    pub static ref DEFAULT_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = {
+        let mut map = HashMap::new();
+        //主题色，dark：深色，light：浅色，system：跟随系统
+        map.insert("theme".to_string(), "system".to_string());
+        //使用D3D渲染
+        map.insert("allow-d3d-render".to_string(), "Y".to_string());
+        //启动时检查软件更新
+        map.insert("enable-check-update".to_string(), "N".to_string());
+        //自动更新
+        map.insert("allow-auto-update".to_string(), "N".to_string());
+        //启用UDP打洞
+        map.insert("enable-udp-punch".to_string(), "Y".to_string());
+        //启用IPv6 P2P连接
+        map.insert("enable-ipv6-punch".to_string(), "Y".to_string());
+        //禁用发现选项卡
+        map.insert("disable-discovery-panel".to_string(), "Y".to_string());
+        //默认提权运行
+        map.insert("pre-elevate-service".to_string(), "Y".to_string());
+        RwLock::new(map)
+    };
     pub static ref OVERWRITE_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref HARD_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref BUILTIN_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
