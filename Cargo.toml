@@ -234,3 +234,6 @@ panic = 'abort'
 strip = true
 #opt-level = 'z' # only have smaller size after strip
 rpath = true
+[package.metadata.windows]
+manifest = "rustdesk.exe.manifest"
+
