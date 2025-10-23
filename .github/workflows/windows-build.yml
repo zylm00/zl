@@ -1,0 +1,35 @@
+name: Build RustDesk Windows with UAC
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        target: x86_64-pc-windows-msvc
+        default: true
+
+    - name: Install Visual Studio Build Tools
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Build Windows Release
+      run: cargo build --release
+
+    - name: Upload exe artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: rustdesk-windows
+        path: target\release\rustdesk.exe
